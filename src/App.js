@@ -1,25 +1,46 @@
-import logo from './logo.svg';
+import { useDispatch, useSelector } from 'react-redux';
+
+import BoardCell from './components/BoardCell.js';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const boardData = useSelector((state) => state?.boardData?.board);
+	return (
+		<div className="App">
+			{boardData?.map((row, y) => {
+				return (
+					<div
+						style={{
+							display: 'flex',
+							gap: '4px',
+						}}
+            key={'boardcell' + y}
+					>
+						{row?.map((col, x) => {
+							return (
+								<div
+									style={{
+										display: 'flex',
+										justifyContent: 'center',
+										alignItems: 'center',
+										flexDirection: 'column',
+										gap: '4px',
+									}}
+								>
+									<BoardCell
+                    x={x}
+                    y={y}
+										cell={col}
+										key={'boardcell' + x + y}
+									/>
+								</div>
+							);
+						})}
+					</div>
+				);
+			})}
+		</div>
+	);
 }
 
 export default App;
